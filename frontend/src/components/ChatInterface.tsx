@@ -9,23 +9,40 @@ export default function ChatInterface() {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     
-    setMessages(prev => [...prev, { role: 'user', content: input }]);
+    const userMessage = input;
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setInput('');
     setIsTyping(true);
     
-    // Mocking response delay
-    setTimeout(() => {
-      let reply = "I can definitely help with that. The UE Engine suggests we look closer at shipping anomalies.";
-      if (input.toLowerCase().includes("scenario") || input.toLowerCase().includes("what if")) {
-        reply = "I've invoked the Scenario Agent. Adjust the sliders in the Sandbox below to see the impact on contribution margin.";
+    try {
+      const res = await fetch('http://localhost:8000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to reach agent orchestrator');
       }
       
-      setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
+      const data = await res.ok ? await res.json() : null;
+      
+      if (data) {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+      } else {
+        setMessages(prev => [...prev, { role: 'assistant', content: "I received an empty response from the orchestrator." }]);
+      }
+    } catch (error) {
+      console.error(error);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Failed to connect to the Fuse Orchestrator. Please check if the backend is running." }]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (

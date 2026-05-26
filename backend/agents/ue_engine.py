@@ -34,7 +34,12 @@ class MarketplaceUEAgent:
             gross_profit=gross_profit,
             gross_margin_pct=gross_margin_pct,
             contribution_margin=contribution_margin,
-            contribution_margin_pct=contribution_margin_pct
+            contribution_margin_pct=contribution_margin_pct,
+            price=sku.price,
+            cogs=sku.cogs,
+            fulfillment_cost=sku.fulfillment_cost,
+            marketplace_fee_pct=sku.marketplace_fee_pct,
+            ad_spend=sku.ad_spend
         )
 
     def process_all_skus(self, skus: list[SKUData]) -> list[UEMetrics]:

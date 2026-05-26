@@ -2,9 +2,21 @@
 import { useState } from 'react';
 import { Sliders, TrendingUp } from 'lucide-react';
 
-export default function ScenarioSimulator() {
+interface ScenarioSimulatorProps {
+  onSimulate: (params: { ad_spend_change_pct: number; fulfillment_change_pct: number }) => void;
+  isSimulating: boolean;
+}
+
+export default function ScenarioSimulator({ onSimulate, isSimulating }: ScenarioSimulatorProps) {
   const [adSpend, setAdSpend] = useState(0);
   const [shipping, setShipping] = useState(0);
+
+  const handleSubmit = () => {
+    onSimulate({
+      ad_spend_change_pct: adSpend,
+      fulfillment_change_pct: shipping,
+    });
+  };
 
   return (
     <div className="glass-panel p-6 rounded-2xl">
@@ -44,8 +56,12 @@ export default function ScenarioSimulator() {
           />
         </div>
 
-        <button className="w-full py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all">
-          <TrendingUp className="w-4 h-4" /> Run Simulation
+        <button 
+          onClick={handleSubmit}
+          disabled={isSimulating}
+          className="w-full py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+        >
+          <TrendingUp className="w-4 h-4" /> {isSimulating ? 'Simulating...' : 'Run Simulation'}
         </button>
       </div>
     </div>

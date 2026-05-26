@@ -20,6 +20,11 @@ class UEMetrics(BaseModel):
     gross_margin_pct: float
     contribution_margin: float
     contribution_margin_pct: float
+    price: float = 0.0
+    cogs: float = 0.0
+    fulfillment_cost: float = 0.0
+    marketplace_fee_pct: float = 0.0
+    ad_spend: float = 0.0
 
 class WhatIfRequest(BaseModel):
     sku_id: Optional[str] = None

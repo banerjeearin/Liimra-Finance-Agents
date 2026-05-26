@@ -1,0 +1,9 @@
+Sheets: ['📋 Documentation', '⚙ Config & Assumptions', '🏪 Marketplace UE', '🎛 What-If Model', '📊 FY2627 Actuals', '📊 MTD Dashboard', '📅 Monthly PvA']
+
+First sheet head:
+  LIIMRA NATURALS — UNIT ECONOMICS MODEL  |  FY 2026-27                                         Unnamed: 1
+0        Model Documentation, Methodology & Glossary                                                   NaN
+1                                                NaN                                                   NaN
+2                                            PURPOSE                                                   NaN
+3                                              Scope     This workbook models SKU-level unit economics ...
+4                            Sheets in this workbook     📋 Documentation  |  📊 FY2627 Actuals  |  🎛 Wha...
